@@ -1,20 +1,31 @@
 pub mod configuration;
 pub mod router;
+pub mod template;
 
 use eyre::Result;
 use std::net::IpAddr;
 
-use crate::configuration::Settings;
+use crate::configuration::{ApplicationSettings, Settings};
 use crate::router::router;
 
 pub struct App {
     addr: IpAddr,
     port: u16,
+    application_setting: ApplicationSettings,
+}
+
+#[derive(Clone)]
+pub struct AppState {
+    pub application: ApplicationSettings,
 }
 
 impl App {
     pub async fn run(&self) -> Result<()> {
-        let router = router();
+        let state = AppState {
+            application: self.application_setting.clone(),
+        };
+
+        let router = router(state);
         let listener = tokio::net::TcpListener::bind((self.addr, self.port)).await?;
 
         axum::serve(listener, router).await?;
@@ -31,7 +42,8 @@ impl From<Settings> for App {
 
         Self {
             addr,
-            port: config.application.port,
+            port: config.port,
+            application_setting: config.application,
         }
     }
 }

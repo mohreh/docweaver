@@ -5,13 +5,14 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Settings {
+    pub port: u16,
     pub application: ApplicationSettings,
     // pub database: DatabaseSettings,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct ApplicationSettings {
-    pub port: u16,
+    pub title: String,
 }
 
 pub fn get_configuration() -> Result<Settings, config::ConfigError> {
