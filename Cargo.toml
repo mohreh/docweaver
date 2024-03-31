@@ -8,4 +8,7 @@ edition = "2021"
 [dependencies]
 axum = "0.7.5"
 comrak = "0.22.0"
+config = "0.14.0"
+eyre = "0.6.12"
+serde = { version = "1.0.197", features = ["derive"] }
 tokio = { version = "1.37.0", features = ["full"] }
