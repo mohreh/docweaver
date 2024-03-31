@@ -12,6 +12,13 @@ pub struct Settings {
 #[derive(Deserialize, Clone)]
 pub struct ApplicationSettings {
     pub title: String,
+    pub nav: Option<Vec<NavItem>>,
+}
+
+#[derive(Deserialize, Clone)]
+pub struct NavItem {
+    pub title: String,
+    pub path: String,
 }
 
 pub fn get_configuration() -> Result<Settings, config::ConfigError> {

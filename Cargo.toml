@@ -19,5 +19,8 @@ axum = "0.7.5"
 comrak = "0.22.0"
 config = "0.14.0"
 eyre = "0.6.12"
+linked-hash-map = { version = "0.5.6", features = ["serde_impl"] }
 serde = { version = "1.0.197", features = ["derive"] }
+serde_yaml = "0.9.34"
 tokio = { version = "1.37.0", features = ["full"] }
+yaml-rust = "0.4.5"
