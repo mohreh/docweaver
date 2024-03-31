@@ -12,6 +12,7 @@ pub struct Settings {
 #[derive(Deserialize, Clone)]
 pub struct ApplicationSettings {
     pub title: String,
+    pub head_link: Option<Vec<HashMap<String, String>>>,
     pub nav: Option<Vec<NavItem>>,
     pub description: Option<String>,
     pub features: Option<Vec<Feature>>,

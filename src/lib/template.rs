@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::{collections::HashMap, path::PathBuf};
 
 use askama::Template;
 use comrak::{markdown_to_html, ComrakOptions};
@@ -13,6 +13,7 @@ pub struct MainPageTemplate<'a> {
     nav_titles: Vec<NavItem>,
     description: &'a str,
     features: Vec<Feature>,
+    head_link: Vec<HashMap<String, String>>,
 }
 
 #[derive(Template)]
@@ -21,6 +22,7 @@ pub struct DocTemplate<'a> {
     content: &'a str,
     title: &'a str,
     nav_titles: Vec<NavItem>,
+    head_link: Vec<HashMap<String, String>>,
 }
 
 impl<'a> DocTemplate<'a> {
@@ -33,6 +35,7 @@ impl<'a> DocTemplate<'a> {
             content: &markdown_to_html(&tokio::fs::read_to_string(path).await.unwrap(), opts),
             title: &setting.title,
             nav_titles: setting.nav.clone().unwrap_or_default(),
+            head_link: setting.head_link.clone().unwrap_or_default(),
         };
 
         Ok(html.render()?)
@@ -46,6 +49,7 @@ impl<'a> MainPageTemplate<'a> {
             nav_titles: setting.nav.clone().unwrap_or_default(),
             description: setting.description.as_deref().unwrap_or_default(),
             features: setting.features.clone().unwrap_or_default(),
+            head_link: setting.head_link.clone().unwrap_or_default(),
         };
 
         Ok(html.render()?)

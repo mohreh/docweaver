@@ -1,5 +1,11 @@
 port: 8000
 application:
+  head_link:
+    - rel: stylesheets
+      href: https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css
+    - rel: icon
+      href: ./favicon.ico
+      type: image/x-icon
   title: DocWeaver
   description: A Seamless Markdown Documentation Experience
   features:
