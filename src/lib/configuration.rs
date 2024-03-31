@@ -7,7 +7,6 @@ use serde::Deserialize;
 pub struct Settings {
     pub port: u16,
     pub application: ApplicationSettings,
-    // pub database: DatabaseSettings,
 }
 
 #[derive(Deserialize, Clone)]

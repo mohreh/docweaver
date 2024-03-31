@@ -11,18 +11,18 @@ use crate::router::router;
 pub struct App {
     addr: IpAddr,
     port: u16,
-    application_setting: ApplicationSettings,
+    application_settings: ApplicationSettings,
 }
 
 #[derive(Clone)]
 pub struct AppState {
-    pub application: ApplicationSettings,
+    application: ApplicationSettings,
 }
 
 impl App {
     pub async fn run(&self) -> Result<()> {
         let state = AppState {
-            application: self.application_setting.clone(),
+            application: self.application_settings.clone(),
         };
 
         let router = router(state);
@@ -43,7 +43,7 @@ impl From<Settings> for App {
         Self {
             addr,
             port: config.port,
-            application_setting: config.application,
+            application_settings: config.application,
         }
     }
 }
