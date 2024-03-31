@@ -1,0 +1,16 @@
+<div class="header header-fixed u-unselectable header-animated">
+  <div class="header-brand">
+    <div class="nav-item no-hover">
+      <a><h6 class="title">{{ title }}</h6></a>
+    </div>
+  </div>
+  <div class="header-nav" id="header-menu" role="button">
+    <div class="nav-right">
+      {% for t in nav_titles %}
+      <div class="nav-item">
+        <a href="/{{t.path}}">{{ t.title }}</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

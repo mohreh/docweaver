@@ -8,15 +8,27 @@ use axum::{
     routing, Extension, Router,
 };
 
-use crate::{template::DocTemplate, AppState};
+use crate::{
+    template::{DocTemplate, MainPageTemplate},
+    AppState,
+};
 
 pub fn router(state: AppState) -> Router {
     Router::new()
+        .route("/", routing::get(main_page))
         .route("/*path", routing::get(handler))
         .with_state(state)
         .layer(Extension(ComrakOptions {
             ..ComrakOptions::default()
         }))
+}
+
+async fn main_page(state: State<AppState>) -> impl IntoResponse {
+    Html(
+        MainPageTemplate::render_markdown(&state.application)
+            .await
+            .unwrap(),
+    )
 }
 
 async fn handler(

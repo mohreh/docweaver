@@ -1,48 +1,18 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>{{ title }}</title>
-    <!-- <link rel="stylesheet" href="./style.css" /> -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/cirrus-ui/dist/cirrus.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-      integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-      rel="stylesheet"
-    />
-    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
-  </head>
+  {% include "common/head.html" %}
   <body>
-    <div class="header header-fixed u-unselectable header-animated">
-      <div class="header-brand">
-        <div class="nav-item no-hover">
-          <a><h6 class="title">{{ title }}</h6></a>
-        </div>
+    {% include "common/nav.html" %}
+    <main>
+      <h1>{{ title }}</h1>
+      <p>{{ description }}</p>
+
+      {% for feature in features %}
+      <div>
+        <h4>{{ feature.title }}</h2>
+        <p>{{ feature.description }}</p>
       </div>
-      <div class="header-nav" id="header-menu" role="button">
-        <div class="nav-right">
-          {% for t in nav_titles %}
-          <div class="nav-item">
-            <a href="/{{t.path}}">{{ t.title }}</a>
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-    <main>{{ content|safe }}</main>
+      {% endfor %}
+    </main>
   </body>
 </html>

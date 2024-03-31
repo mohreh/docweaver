@@ -2,6 +2,25 @@ port: 8000
 application:
   title: DocWeaver
   description: A Seamless Markdown Documentation Experience
+  features:
+    - title: Seamless Markdown Rendering
+      description: DocWeave allows you to render and serve Markdown files on-the-fly, providing an interactive and up-to-date documentation experience. Your content is dynamically converted to HTML, ensuring that any changes to your Markdown files are immediately reflected.
+
+    - title: Hierarchical Navigation Structure
+      description: DocWeave automatically generates a navigation sidebar based on the directory structure of your Markdown files. This hierarchical organization makes it easy for users to navigate through different sections and subsections, providing a smooth and intuitive browsing experience.
+
+    - title: Custom Styling
+      description: DocWeave supports custom CSS styling, allowing you to tailor the appearance and branding of your documentation site. You can easily adapt the look and feel to match your project's design or personal preferences.
+
+    - title: Static File Serving
+      description: DocWeave allows you to serve static files, such as CSS stylesheets, JavaScript files, and images, alongside your Markdown content, providing a complete and self-contained documentation website.
+
+    - title: Developer-Friendly
+      description: Built with Rust, DocWeave is a developer-friendly application that takes advantage of Rust's performance, safety, and concurrency features, ensuring a reliable and efficient documentation experience.
+
+    - title: Custom Styling
+      description: DocWeave supports custom CSS styling, allowing you to tailor the appearance and branding of your documentation site. You can easily adapt the look and feel to match your project's design or personal preferences.
+
   nav:
     - title: Home
       path: index
