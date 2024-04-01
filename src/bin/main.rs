@@ -4,6 +4,7 @@ use docweaver::App;
 #[tokio::main]
 async fn main() {
     let app: App = get_configuration()
+        .await
         .expect("failed to read configuration")
         .into();
 

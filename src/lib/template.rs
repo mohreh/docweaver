@@ -14,6 +14,7 @@ pub struct MainPageTemplate<'a> {
     description: &'a str,
     features: Vec<Feature>,
     head_link: Vec<HashMap<String, String>>,
+    custom_css: String,
 }
 
 #[derive(Template)]
@@ -23,6 +24,7 @@ pub struct DocTemplate<'a> {
     title: &'a str,
     nav_titles: Vec<NavItem>,
     head_link: Vec<HashMap<String, String>>,
+    custom_css: String,
 }
 
 impl<'a> DocTemplate<'a> {
@@ -36,6 +38,16 @@ impl<'a> DocTemplate<'a> {
             title: &setting.title,
             nav_titles: setting.nav.clone().unwrap_or_default(),
             head_link: setting.head_link.clone().unwrap_or_default(),
+            custom_css: {
+                let mut custom_css = String::new();
+                for custom_css_file in setting.custom_style_path.clone().unwrap_or_default() {
+                    println!("{:?}", custom_css_file);
+                    custom_css += &tokio::fs::read_to_string(custom_css_file).await?;
+                    // .unwrap_or_default();
+                }
+
+                custom_css
+            },
         };
 
         Ok(html.render()?)
@@ -50,6 +62,16 @@ impl<'a> MainPageTemplate<'a> {
             description: setting.description.as_deref().unwrap_or_default(),
             features: setting.features.clone().unwrap_or_default(),
             head_link: setting.head_link.clone().unwrap_or_default(),
+            custom_css: {
+                let mut custom_css = String::new();
+                for custom_css_file in setting.custom_style_path.clone().unwrap_or_default() {
+                    custom_css += &tokio::fs::read_to_string(custom_css_file)
+                        .await
+                        .unwrap_or_default();
+                }
+
+                custom_css
+            },
         };
 
         Ok(html.render()?)

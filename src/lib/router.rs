@@ -1,9 +1,10 @@
 use comrak::ComrakOptions;
 use std::path::PathBuf;
+use tower_http::cors::CorsLayer;
 
 use axum::{
     extract::{Path, State},
-    http::StatusCode,
+    http::{header::CONTENT_TYPE, Method, StatusCode},
     response::{Html, IntoResponse},
     routing, Extension, Router,
 };
@@ -14,10 +15,22 @@ use crate::{
 };
 
 pub fn router(state: AppState) -> Router {
+    let cors = CorsLayer::new()
+        .allow_methods([
+            Method::GET,
+            Method::POST,
+            Method::DELETE,
+            Method::PATCH,
+            Method::OPTIONS,
+        ])
+        .allow_headers([CONTENT_TYPE])
+        .allow_origin(["http://localhost:8080".parse().unwrap()]);
+
     Router::new()
         .route("/", routing::get(main_page))
         .route("/*path", routing::get(handler))
         .with_state(state)
+        .layer(cors)
         .layer(Extension(ComrakOptions {
             ..ComrakOptions::default()
         }))
@@ -31,6 +44,7 @@ async fn main_page(state: State<AppState>) -> impl IntoResponse {
     )
 }
 
+#[axum::debug_handler]
 async fn handler(
     state: State<AppState>,
     Path(path): Path<String>,
