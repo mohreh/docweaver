@@ -14,6 +14,7 @@ pub struct ApplicationSettings {
     pub title: String,
     pub head_link: Option<Vec<HashMap<String, String>>>,
     pub nav: Option<Vec<NavItem>>,
+    pub sidebar: Option<Vec<SidebarItem>>,
     pub description: Option<String>,
     pub features: Option<Vec<Feature>>,
     pub custom_style_path: Option<Vec<String>>,
@@ -21,6 +22,12 @@ pub struct ApplicationSettings {
 
 #[derive(Deserialize, Clone)]
 pub struct NavItem {
+    pub title: String,
+    pub path: String,
+}
+
+#[derive(Deserialize, Clone)]
+pub struct SidebarItem {
     pub title: String,
     pub path: String,
 }

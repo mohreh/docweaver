@@ -4,7 +4,7 @@ use askama::Template;
 use comrak::{markdown_to_html, ComrakOptions};
 use eyre::{Ok, Result};
 
-use crate::configuration::{ApplicationSettings, Feature, NavItem};
+use crate::configuration::{ApplicationSettings, Feature, NavItem, SidebarItem};
 static INIT_DOC_STYLES: Once = Once::new();
 static INIT_MAINPAGE_STYLE: Once = Once::new();
 
@@ -21,10 +21,12 @@ pub struct MainPageTemplate<'a> {
 #[derive(Template)]
 #[template(path = "doc.html")]
 pub struct DocTemplate<'a> {
+    path: &'a str,
     content: &'a str,
     title: &'a str,
     nav_titles: Vec<NavItem>,
     head_link: Vec<HashMap<String, String>>,
+    sidebar: Vec<SidebarItem>,
 }
 
 impl<'a> DocTemplate<'a> {
@@ -38,6 +40,12 @@ impl<'a> DocTemplate<'a> {
             title: &setting.title,
             nav_titles: setting.nav.clone().unwrap_or_default(),
             head_link: setting.head_link.clone().unwrap_or_default(),
+            sidebar: setting.sidebar.clone().unwrap_or_default(),
+            path: &path
+                .to_str()
+                .unwrap_or_default()
+                .replace("./docs/", "")
+                .replace(".md", ""),
         };
 
         Ok(html.render().map(|html| {
