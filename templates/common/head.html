@@ -3,13 +3,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>{{ title }}</title>
-  <!-- <link rel="stylesheet" href="./style.css" /> -->
 
   {% for link in head_link %}
   <link {% for (k, v) in link %} {{ k }}="{{ v }}" {% endfor %} />
   {% endfor %}
-
-  <style>
-    {{custom_css}}
-  </style>
+  <link rel="stylesheet" type="text/css" href="/assets/styles/doc.css" />
+  <link rel="stylesheet" type="text/css" href="/assets/styles/index.css" />
+  <link rel="stylesheet" type="text/css" href="/assets/styles/main.css" />
 </head>

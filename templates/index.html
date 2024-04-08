@@ -1,18 +1,29 @@
-<!doctype html>
-<html lang="en">
-  {% include "common/head.html" %}
-  <body>
-    {% include "common/nav.html" %}
-    <main>
-      <h1>{{ title }}</h1>
-      <p>{{ description }}</p>
-
+{% extends "base.html" %}
+{% block content %}
+<main class="py-16">
+  <div class="container mx-auto">
+    <div class="max-w-xl mx-auto text-center mb-16">
+<h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl mb-4">
+    {{ title }}
+</h1>
+      <p class="text-gray-600 text-lg md:text-xl">{{ description }}</p>
+<a href="/{{ nav_titles[0].path }}" class="inline-flex mt-8 items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg shadow-md transition-colors duration-300 ease-in-out">
+  <span class="mr-2">Get Started</span>
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+  </svg>
+</a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {% for feature in features %}
-      <div>
-        <h4>{{ feature.title }}</h2>
-        <p>{{ feature.description }}</p>
+      <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+        <div class="p-6 md:p-8">
+          <h4 class="text-xl md:text-2xl font-bold mb-2 text-gray-800">{{ feature.title }}</h4>
+          <p class="text-gray-600 mb-4">{{ feature.description }}</p>
+        </div>
       </div>
       {% endfor %}
-    </main>
-  </body>
-</html>
+    </div>
+  </div>
+</main>
+{% endblock %}

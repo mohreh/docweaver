@@ -1,10 +1,12 @@
-use std::{collections::HashMap, path::PathBuf};
+use std::{collections::HashMap, path::PathBuf, sync::Once};
 
 use askama::Template;
 use comrak::{markdown_to_html, ComrakOptions};
-use eyre::Result;
+use eyre::{Ok, Result};
 
 use crate::configuration::{ApplicationSettings, Feature, NavItem};
+static INIT_DOC_STYLES: Once = Once::new();
+static INIT_MAINPAGE_STYLE: Once = Once::new();
 
 #[derive(Template)]
 #[template(path = "index.html")]
@@ -14,7 +16,6 @@ pub struct MainPageTemplate<'a> {
     description: &'a str,
     features: Vec<Feature>,
     head_link: Vec<HashMap<String, String>>,
-    custom_css: String,
 }
 
 #[derive(Template)]
@@ -24,7 +25,6 @@ pub struct DocTemplate<'a> {
     title: &'a str,
     nav_titles: Vec<NavItem>,
     head_link: Vec<HashMap<String, String>>,
-    custom_css: String,
 }
 
 impl<'a> DocTemplate<'a> {
@@ -38,19 +38,14 @@ impl<'a> DocTemplate<'a> {
             title: &setting.title,
             nav_titles: setting.nav.clone().unwrap_or_default(),
             head_link: setting.head_link.clone().unwrap_or_default(),
-            custom_css: {
-                let mut custom_css = String::new();
-                for custom_css_file in setting.custom_style_path.clone().unwrap_or_default() {
-                    println!("{:?}", custom_css_file);
-                    custom_css += &tokio::fs::read_to_string(custom_css_file).await?;
-                    // .unwrap_or_default();
-                }
-
-                custom_css
-            },
         };
 
-        Ok(html.render()?)
+        Ok(html.render().map(|html| {
+            INIT_DOC_STYLES.call_once(|| {
+                tokio::runtime::Handle::current().spawn(generate_styles(html.clone(), "doc.css"));
+            });
+            html
+        })?)
     }
 }
 
@@ -62,18 +57,37 @@ impl<'a> MainPageTemplate<'a> {
             description: setting.description.as_deref().unwrap_or_default(),
             features: setting.features.clone().unwrap_or_default(),
             head_link: setting.head_link.clone().unwrap_or_default(),
-            custom_css: {
-                let mut custom_css = String::new();
-                for custom_css_file in setting.custom_style_path.clone().unwrap_or_default() {
-                    custom_css += &tokio::fs::read_to_string(custom_css_file)
-                        .await
-                        .unwrap_or_default();
-                }
-
-                custom_css
-            },
         };
 
-        Ok(html.render()?)
+        Ok(html.render().map(|html| {
+            INIT_MAINPAGE_STYLE.call_once(|| {
+                tokio::runtime::Handle::current().spawn(generate_styles(html.clone(), "index.css"));
+            });
+            html
+        })?)
     }
+}
+
+async fn generate_styles(html: String, file_name: &str) -> Result<()> {
+    let css = encre_css::generate(html.lines(), &encre_css::config::Config::default());
+    let mut style = lightningcss::stylesheet::StyleSheet::parse(
+        &css,
+        lightningcss::stylesheet::ParserOptions::default(),
+    )
+    .unwrap();
+    style.minify(lightningcss::stylesheet::MinifyOptions::default())?;
+    let res = style.to_css(lightningcss::printer::PrinterOptions {
+        minify: true,
+        ..lightningcss::printer::PrinterOptions::default()
+    })?;
+    let _ = tokio::fs::write(
+        std::env::current_dir()
+            .expect("Failed to determine current directory.")
+            .join("assets")
+            .join("styles")
+            .join(file_name),
+        res.code,
+    )
+    .await;
+    Ok(())
 }

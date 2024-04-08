@@ -2,7 +2,7 @@ pub mod configuration;
 pub mod router;
 pub mod template;
 
-use eyre::Result;
+use eyre::{Ok, Result};
 use std::net::IpAddr;
 
 use crate::configuration::{ApplicationSettings, Settings};

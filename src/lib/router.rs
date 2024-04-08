@@ -1,6 +1,9 @@
 use comrak::ComrakOptions;
 use std::path::PathBuf;
-use tower_http::cors::CorsLayer;
+use tower_http::{
+    cors::CorsLayer,
+    services::{ServeDir, ServeFile},
+};
 
 use axum::{
     extract::{Path, State},
@@ -26,9 +29,14 @@ pub fn router(state: AppState) -> Router {
         .allow_headers([CONTENT_TYPE])
         .allow_origin(["http://localhost:8080".parse().unwrap()]);
 
+    let serve_dir =
+        ServeDir::new("./assets").not_found_service(ServeFile::new("./templates/404.html"));
+
     Router::new()
+        .nest_service("/assets", serve_dir.clone())
         .route("/", routing::get(main_page))
         .route("/*path", routing::get(handler))
+        .fallback_service(serve_dir)
         .with_state(state)
         .layer(cors)
         .layer(Extension(ComrakOptions {

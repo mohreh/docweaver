@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 use config::{self, File, FileFormat, Source};
-use eyre::{Ok, Result};
 use serde::Deserialize;
 
 #[derive(Deserialize)]
@@ -32,7 +31,7 @@ pub struct Feature {
     pub description: String,
 }
 
-pub async fn get_configuration() -> Result<Settings> {
+pub async fn get_configuration() -> Result<Settings, config::ConfigError> {
     let base_path = std::env::current_dir().expect("Failed to determine current directory.");
 
     let mut builder = config::Config::builder().add_source(
@@ -55,37 +54,5 @@ pub async fn get_configuration() -> Result<Settings> {
         )?;
     }
 
-    let mut setting: Settings = builder.build()?.try_deserialize()?;
-    setting.application.parse_head_link().await?;
-    Ok(setting)
-}
-
-impl ApplicationSettings {
-    async fn parse_head_link(&mut self) -> Result<()> {
-        let head_link = self.head_link.clone().unwrap_or_default();
-        let mut head_link_without_scss = Vec::new();
-        let mut custom_style_path = Vec::new();
-        for link in head_link {
-            let mut custom_style = false;
-            for (k, v) in &link {
-                if k == "href" && v.contains(".scss") {
-                    custom_style = true;
-                    let scss_path = std::env::current_dir()?.join(v.replace("./", ""));
-                    let mut css_path = scss_path.clone();
-                    css_path.set_extension("css");
-                    let css_path_clone = css_path.clone();
-                    grass::from_path(scss_path.clone(), &grass::Options::default())
-                        .map(move |css| async { tokio::fs::write(css_path, css).await })?
-                        .await?;
-                    custom_style_path.push(css_path_clone.to_str().unwrap().to_string())
-                }
-            }
-            if !custom_style {
-                head_link_without_scss.push(link);
-            }
-        }
-        self.head_link = Some(head_link_without_scss);
-        self.custom_style_path = Some(custom_style_path);
-        Ok(())
-    }
+    builder.build()?.try_deserialize()
 }
