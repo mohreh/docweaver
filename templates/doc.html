@@ -19,4 +19,33 @@
     {{ content|safe }}
   </div>
 </main>
+<script>
+const articleContainer = document.querySelector("main");
+
+const headings = articleContainer.querySelectorAll("h2, h3, h4, h5, h6");
+
+if (headings.length > 2) {
+  const details = document.createElement("div");
+  details.setAttribute("class", ""); // You can use any class name you want
+  
+  headings.forEach((el) => {
+    el.id = el.id || el.textContent.toLocaleLowerCase().replace(/\W/g,"-"); // Create IDs if missing - optional
+    const p = document.createElement("p");
+
+    // Add a class to the p tag with the heading like "toc-h2"
+    p.setAttribute("class", "" + el.tagName.toLocaleLowerCase());
+    const a = document.createElement("a");
+    a.setAttribute("class", "");
+    a.textContent = el.textContent;
+
+    // Add a link to the section in the text
+    a.href = "#" + el.id;
+    p.append(a);
+    details.append(p);
+  });
+
+  // Add the table of contents to the beginning of the article
+  articleContainer.append(details);
+}
+</script>
 {% endblock %}

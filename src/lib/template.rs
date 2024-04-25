@@ -3,6 +3,7 @@ use std::{collections::HashMap, path::PathBuf, sync::Once};
 use askama::Template;
 use comrak::{markdown_to_html, ComrakOptions};
 use eyre::{Ok, Result};
+use html5ever::interface::TreeSink;
 
 use crate::configuration::{ApplicationSettings, Feature, NavItem, SidebarItem};
 static INIT_DOC_STYLES: Once = Once::new();
