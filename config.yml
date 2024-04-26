@@ -29,12 +29,24 @@ application:
   #
   nav:
     - title: Home
-      path: index
-    - title: About
-      path: about
+      path: home.md
+    - title: HBBS
+      path: hbbs.md
+    - title: HBBR
+      path: hbbr.md
 
   sidebar:
-    - title: Getting Started
-      path: index
-    - title: About
-      path: about
+    - title: سرورهای hbbs
+      path: hbbs
+
+    - title: سرورهای hbbr
+      path: hbbr
+
+    - title: نحوه عملکرد سرورها
+      path: how_servers_workds
+
+    - title: نحوه انتخاب relay سرور
+      path: how_choose_relay
+
+    - title: ایده‌های بهبود فرآیند انتخاب سرور رله
+      path: ideas_for_choosing_relay_server

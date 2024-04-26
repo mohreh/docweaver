@@ -1,3 +1,15 @@
+* {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.article-container {
+  @apply mt-8 p-4 border border-gray-200 rounded-lg h-fit sticky top-12 w-1/6;
+  .details {
+    @apply flex flex-col gap-4 sticky top-0;
+  }
+}
+
 .markdown-content {
   @apply font-normal text-gray-800;
 
@@ -52,7 +64,8 @@
   }
 
   pre {
-    @apply bg-gray-100 p-4 rounded-md overflow-x-auto;
+    direction: ltr !important;
+    @apply bg-gray-100 p-4 rounded-md overflow-x-auto mb-2;
   }
 
   code {
