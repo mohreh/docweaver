@@ -1,4 +1,5 @@
 port: 8000
+app_environment: production
 application:
   head_link:
     - rel: icon

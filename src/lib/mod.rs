@@ -5,7 +5,7 @@ pub mod template;
 use eyre::{Ok, Result};
 use std::net::IpAddr;
 
-use crate::configuration::{ApplicationSettings, Settings};
+use crate::configuration::{ApplicationSettings, Environment, Settings};
 use crate::router::router;
 
 pub struct App {
@@ -36,9 +36,12 @@ impl App {
 
 impl From<Settings> for App {
     fn from(config: Settings) -> Self {
-        let addr = "127.0.0.1"
-            .parse::<IpAddr>()
-            .expect("failed to parse host string to ip address");
+        let addr = match config.app_environment {
+            Environment::Local => "127.0.0.1",
+            Environment::Production => "0.0.0.0",
+        }
+        .parse::<IpAddr>()
+        .expect("failed to parse host string to ip address");
 
         Self {
             addr,
