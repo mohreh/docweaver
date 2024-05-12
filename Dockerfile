@@ -20,6 +20,7 @@ RUN npm i -g tailwindcss
 COPY . .
 ENV APP_ENVIRONMENT production
 RUN cargo build --release
+RUN ls
 
 FROM debian:bullseye-slim AS runtime
 
