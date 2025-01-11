@@ -1,32 +1,45 @@
-{% extends "base.html" %}
-{% block content %}
-<main class="py-16">
-  <div class="container mx-auto">
-    <div class="max-w-xl mx-auto text-center mb-16">
-<h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl mb-4">
-    {{ title }}
-</h1>
-      <p class="text-gray-600 text-lg md:text-xl">{{ description }}</p>
+{% extends "base.html" %} {% block content %}
+<main class="pt-16">
+    <div class="container mx-auto">
+        <div class="flex flex-col lg:flex-row items-center justify-center">
+            <div class="mb-16 mt-10 w-full lg:w-3/6">
+                <h1
+                    class="w-fit bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text text-4xl font-extrabold sm:text-5xl md:text-6xl mb-4"
+                >
+                    {{ title }}
+                </h1>
+                <p class="text-slate-600 text-lg md:text-xl leading-loose">
+                    {{ description|safe }}
+                </p>
 
-      {% if nav_titles.len() != 0 %}
-        <a href="/{{ nav_titles[0].path }}" class="inline-flex mt-8 items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg shadow-md transition-colors duration-300 ease-in-out">
-      {% endif %}
-  <span class="mr-2">Get Started</span>
-  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-  </svg>
-</a>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {% for feature in features %}
-      <div class="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-        <div class="p-6 md:p-8">
-          <h4 class="text-xl md:text-2xl font-bold mb-2 text-gray-800">{{ feature.title }}</h4>
-          <p class="text-gray-600 mb-4">{{ feature.description }}</p>
+                <div class="flex gap-2 justify-start w-fit">
+                    {% for link in quick_links %}
+                    <a href="{{ link.href }}" class="quick-link">
+                        <span class="">{{ link.name }}</span>
+                        {{ link.icon|safe }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <img class="h-auto max-w-lg" src="assets/header-img.png" />
         </div>
-      </div>
-      {% endfor %}
+        <div
+            class="features mx-auto py-12 grid grid-cols-1 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
+            {% for feature in features %}
+            <div
+                class="feature bg-slate-50 rounded-lg shadow-sm shadow-slate-200 hover:shadow-md transition-shadow duration-300 ease-in-out"
+            >
+                <div class="p-6 md:p-8">
+                    {{ feature.icon|safe }}
+                    <h4 class="text-xl font-semibold text-slate-900 mb-2 mt-8">
+                        {{ feature.title }}
+                    </h4>
+                    <p class="text-slate-600 mb-4">{{ feature.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-  </div>
 </main>
 {% endblock %}

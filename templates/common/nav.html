@@ -1,8 +1,9 @@
 <nav class="z-30 py-4 border-b border-blue-50" role="navigation" aria-label="main navigation">
   <div class="container flex justify-between items-center mx-auto w-full min-w-0 h-auto lg:h-auto whitespace-no-wrap">
-    
+
   <div class="flex-shrink-0 lg:block header-logo">
-    <a class="block max-w-200" href="/">
+    <a class="block max-w-200 flex flex-row gap-3 items-center" href="/">
+      <img width="50" src="/assets/logo.svg" />
       <h3 class="text-2xl font-semibold sm:text-xl md:text-2xl leading-tall">{{ title }}</h1>
     </a>
 
@@ -24,18 +25,18 @@
     <ul class="flex hidden space-x-8 h-full text-sm font-semibold tracking-wide leading-tight uppercase lg:flex">
       {% for t in nav_titles %}
       <li class="flex items-center h-full">
-        <span class="flex items-center h-full cursor-pointer header-item header-item-active transition-fast-out hover:text-xenon-600" href="/{{t.path}}">
+        <a class="flex items-center h-full cursor-pointer header-item header-item-active transition-fast-out hover:text-xenon-600" href="/{{t.path}}">
           {{ t.title }}
-        </span>
+        </a>
       </li>
       {% endfor %}
     </ul>
 
     <div class="hidden relative mr-3 md:block md:mr-0">
         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-          <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+          <svg class="w-5 h-5 text-slate-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="email-adress-icon" class="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Search...">
+        <input type="text" id="email-adress-icon" class="block p-2 pl-10 w-full text-slate-900 bg-slate-50 rounded-lg border border-slate-300 sm:text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Search...">
     </div>
   </div>
   </div>

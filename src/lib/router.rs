@@ -72,7 +72,7 @@ async fn handler(
     }
 
     Html(
-        DocTemplate::render_markdown(&state.application, &path, &opts)
+        DocTemplate::render_markdown(&state.application, &state.sidebar, &path, &opts)
             .await
             .unwrap(),
     )

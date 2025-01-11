@@ -3,6 +3,7 @@ use docweaver::App;
 
 #[tokio::main]
 async fn main() {
+    env_logger::init();
     let app: App = get_configuration()
         .await
         .expect("failed to read configuration")

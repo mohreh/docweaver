@@ -5,49 +5,45 @@ application:
     - rel: icon
       href: assets/favicon.ico
       type: image/x-icon
-    # - rel: stylesheet
-    #   href: ./templates/assets/styles.scss
-  title: RDesk
-  description: A Seamless Markdown Documentation Experience
-  # features:
-  #   - title: Seamless Markdown Rendering
-  #     description: DocWeave allows you to render and serve Markdown files on-the-fly, providing an interactive and up-to-date documentation experience. Your content is dynamically converted to HTML, ensuring that any changes to your Markdown files are immediately reflected.
-  #
-  #   - title: Hierarchical Navigation Structure
-  #     description: DocWeave automatically generates a navigation sidebar based on the directory structure of your Markdown files. This hierarchical organization makes it easy for users to navigate through different sections and subsections, providing a smooth and intuitive browsing experience.
-  #
-  #   - title: Custom Styling
-  #     description: DocWeave supports custom CSS styling, allowing you to tailor the appearance and branding of your documentation site. You can easily adapt the look and feel to match your project's design or personal preferences.
-  #
-  #   - title: Static File Serving
-  #     description: DocWeave allows you to serve static files, such as CSS stylesheets, JavaScript files, and images, alongside your Markdown content, providing a complete and self-contained documentation website.
-  #
-  #   - title: Developer-Friendly
-  #     description: Built with Rust, DocWeave is a developer-friendly application that takes advantage of Rust's performance, safety, and concurrency features, ensuring a reliable and efficient documentation experience.
-  #
-  #   - title: Custom Styling
-  #     description: DocWeave supports custom CSS styling, allowing you to tailor the appearance and branding of your documentation site. You can easily adapt the look and feel to match your project's design or personal preferences.
-  #
+
+  direction: ltr # or ltr
+
+  title: DocWeaver
+  description: A Modern Documentation Engine Built with Rust.
+    Transform your Markdown into beautiful, navigable documentation
+
+  features:
+    - title: Seamless Markdown Rendering
+      description: DocWeave allows you to render and serve Markdown files on-the-fly, providing an interactive and up-to-date documentation experience. Your content is dynamically converted to HTML, ensuring that any changes to your Markdown files are immediately reflected.
+      icon: iconsax/linear/document-text-1.svg
+
+    - title: Hierarchical Navigation Structure
+      description: DocWeave automatically generates a navigation sidebar based on the directory structure of your Markdown files. This hierarchical organization makes it easy for users to navigate through different sections and subsections, providing a smooth and intuitive browsing experience.
+      icon: iconsax/linear/category-2.svg
+
+    - title: Custom Styling
+      description: DocWeave supports custom CSS styling, allowing you to tailor the appearance and branding of your documentation site. You can easily adapt the look and feel to match your project's design or personal preferences.
+      icon: iconsax/linear/brush-1.svg
+
+    - title: Static File Serving
+      description: DocWeave allows you to serve static files, such as CSS stylesheets, JavaScript files, and images, alongside your Markdown content, providing a complete and self-contained documentation website.
+      icon: iconsax/linear/document-cloud.svg
+
+    - title: Developer-Friendly
+      description: Built with Rust, DocWeave is a developer-friendly application that takes advantage of Rust's performance, safety, and concurrency features, ensuring a reliable and efficient documentation experience.
+      icon: iconsax/linear/programming-arrow.svg
+    - title: Template-Driven Architecture
+      description: Powered by Askama templating engine, offering type-safe template rendering with the performance benefits of compile-time template processing.
+      icon: iconsax/linear/document-code.svg
+
   nav:
-    - title: Home
-      path: home.md
-    - title: HBBS
-      path: hbbs.md
-    - title: HBBR
-      path: hbbr.md
+    - title: Get Started
+      path: getting-started
 
-  sidebar:
-    - title: سرورهای hbbs
-      path: hbbs
-
-    - title: سرورهای hbbr
-      path: hbbr
-
-    - title: نحوه عملکرد سرورها
-      path: how_servers_workds
-
-    - title: نحوه انتخاب relay سرور
-      path: how_choose_relay
-
-    - title: ایده‌های بهبود فرآیند انتخاب سرور رله
-      path: ideas_for_choosing_relay_server
+  quick_links:
+    - name: Getting Started
+      href: /getting-started
+      icon: iconsax/linear/arrow-right-1.svg
+    - name: GitHub
+      href: https://github.com/mohreh/docweaver
+      # icon: iconsax/linear/sagittarius.svg
