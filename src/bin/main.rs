@@ -10,5 +10,5 @@ async fn main() {
         .into();
 
     app.run().await.expect("error running application");
-    println!("Running...")
+    log::info!("Running...")
 }

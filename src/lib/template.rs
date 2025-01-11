@@ -115,7 +115,7 @@ async fn generate_styles(html: String, file_name: &str) -> Result<()> {
 fn generate_sidebar_html(items: &[SidebarItem], current_path: &str, depth: usize) -> String {
     let mut html = String::new();
     for item in items {
-        let mut class = if current_path == item.path {
+        let mut class = if current_path[7..] == item.path {
             "font-bold"
         } else {
             ""
@@ -123,7 +123,7 @@ fn generate_sidebar_html(items: &[SidebarItem], current_path: &str, depth: usize
         .to_string();
 
         if depth > 0 {
-            class += "border-l-1 pl-2 border-slate-200";
+            class += " border-l-1 pl-2 border-slate-200";
         }
         html.push_str(&format!(
             "<li class=\"{}\">
@@ -137,7 +137,7 @@ fn generate_sidebar_html(items: &[SidebarItem], current_path: &str, depth: usize
             item.title,
         ));
         if !item.children.is_empty() {
-            html.push_str("<ul class=\"sidebar-item\">");
+            html.push_str("<ul class=\"sidebar-item font-normal\">");
             html.push_str(&generate_sidebar_html(
                 &item.children,
                 current_path,

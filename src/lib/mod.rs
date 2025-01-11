@@ -9,10 +9,6 @@ use tokio::sync::RwLock;
 use crate::configuration::{ApplicationSettings, Environment, Settings};
 use crate::router::router;
 
-lazy_static::lazy_static! {
-    pub static ref SIDEBAR: RwLock<Vec<SidebarItem>> = RwLock::new(Vec::new());
-}
-
 pub struct App {
     addr: IpAddr,
     port: u16,
@@ -28,11 +24,6 @@ pub struct AppState {
 impl App {
     pub async fn run(&self) -> Result<()> {
         let sidebar_items = initialize_sidebar(&self.application_settings).unwrap();
-        println!("{:?}", sidebar_items);
-        let sidebar = SIDEBAR.read().await;
-        for item in sidebar.iter() {
-            println!("{:?}", &item);
-        }
 
         let state = AppState {
             application: self.application_settings.clone(),
@@ -205,32 +196,6 @@ fn process_markdown_file(path: &Path, docs_root: &Path) -> Result<Option<Sidebar
 
     // Split front matter and content
     let (front_matter, _) = parse_front_matter(&content);
-    // let front_matter = if content.starts_with("---") {
-    //     debug!("Found front matter marker");
-    //     if let Some(end_index) = content[3..].find("---") {
-    //         let yaml_content = &content[3..end_index + 3];
-    //         debug!("Extracted YAML content: {}", yaml_content);
-    //         match serde_yaml::from_str::<FrontMatter>(yaml_content) {
-    //             Ok(fm) => {
-    //                 debug!(
-    //                     "Successfully parsed front matter with title: {:?}",
-    //                     fm.title
-    //                 );
-    //                 fm
-    //             }
-    //             Err(e) => {
-    //                 error!("Failed to parse front matter: {}", e);
-    //                 FrontMatter::default()
-    //             }
-    //         }
-    //     } else {
-    //         warn!("No closing front matter marker found");
-    //         FrontMatter::default()
-    //     }
-    // } else {
-    //     debug!("No front matter found");
-    //     FrontMatter::default()
-    // };
 
     let relative_path = path
         .strip_prefix(docs_root)
